@@ -5,4 +5,5 @@ bs4
 requests
 pandas
 openpyxl
+ginza
 https://github.com/megagonlabs/ginza/releases/download/latest/ja_ginza_electra-latest-with-model.tar.gz
