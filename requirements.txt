@@ -1,9 +1,9 @@
 streamlit
-spacy
+spacy==3.2.5
 python-docx
 bs4
 requests
 pandas
 openpyxl
-ginza
+ginza==5.1.2
 https://github.com/megagonlabs/ginza/releases/download/latest/ja_ginza_electra-latest-with-model.tar.gz
