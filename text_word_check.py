@@ -22,11 +22,11 @@ from email.mime.multipart import MIMEMultipart
 
 # 日本語モデルの構築
 # GINZAの日本語辞書データ
-nlp = spacy.load('ja_ginza_electra')
+nlp = spacy.load('ja_ginza')
 
 # テキストを処理
 def read_text(file_name):
-    if file_name[-4:] == 'docx' or file_name[-3:] == 'doc':
+    if file_name[-4:] == 'docx':
         doc = docx.Document(file_name)
         text_list = []
         for e in doc.element.body.iterchildren():
@@ -59,7 +59,9 @@ def named_entity_recognition(text):
 
 # 固有名詞をデータフレーム化
 def make_df(entities):
-    df_name = pd.DataFrame(entities, columns=['text', 'label', 'start_char', 'end_char'])
+    df = pd.DataFrame(entities, columns=['text', 'label', 'start_char', 'end_char'])
+    # 重複する固有表現(text)を削除
+    df_name = df.drop_duplicates(subset=['text'])
     return df_name
 
 # ヤフーニュースの検索バーのurlに変数keywordを追加する
@@ -193,7 +195,7 @@ st.write("テキスト入力 または ファイル登録して、メールア�
 text = st.text_area("テキストを入力")
 
 # ファイルアップロード
-file = st.file_uploader("ファイル（Word[.doc, .docx] or テキスト[.txt]）をアップロード", accept_multiple_files= False)
+file = st.file_uploader("ワードファイル（.docx） or テキストファイル（.txt）をアップロード", accept_multiple_files= False)
 if file:
     st.markdown(f'{file.name} をアップロードしました')
     file_name = file.name
